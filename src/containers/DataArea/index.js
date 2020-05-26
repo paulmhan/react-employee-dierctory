@@ -63,7 +63,7 @@ export default class DataArea extends Component {
     const sortedUsers = this.state.filteredUsers.sort(compareFnc);
     this.setState({ filteredUsers: sortedUsers });
   }
-  
+
   handleSearchChange = event => {
     console.log(event.target.value);
     const filter = event.target.value;
@@ -77,6 +77,14 @@ export default class DataArea extends Component {
     this.setState({ filteredUsers: filteredList });
   }
 
+  componentDidMount() {
+    API.getUsers().then(results => {
+      this.setState({
+        users: results.data.results,
+        filteredUsers: results.data.results
+      });
+    });
+  }
 
   
 
@@ -84,7 +92,17 @@ export default class DataArea extends Component {
 
   render() {
     return (
-      
+        <>
+        <Nav handleSearchChange={this.handleSearchChange} />
+        <div className="data-area">
+          <DataTable
+            headings={this.headings}
+            users={this.state.filteredUsers}
+            handleSort={this.handleSort}
+          />
+        </div>
+      </>
+
     );
   }
 }
