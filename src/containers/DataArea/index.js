@@ -87,9 +87,6 @@ export default class DataArea extends Component {
   }
 
   
-
-  
-
   render() {
     return (
         <>
